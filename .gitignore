@@ -1,0 +1,7 @@
+#directory of the sistem costruction
+build/
+out/
+
+#file/directory ide
+.idea/
+*.iml
