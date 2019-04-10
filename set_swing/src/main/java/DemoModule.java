@@ -162,7 +162,7 @@ public class DemoModule extends JApplet {
 
     public void loadSourceCode() {
 	if(getResourceName() != null) {
-	    String filename = System.getProperty("user.dir") + "/src/main/java/" + getResourceName() + ".java";
+	    String filename = System.getProperty("user.dir") + "/sources/" + getResourceName() + ".java";
 	    sourceCode = new String("<html><body bgcolor=\"#ffffff\"><pre>");
 	    char[] buff = new char[50000];
 	    InputStream is;

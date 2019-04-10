@@ -18,22 +18,23 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
     flatDir {
-        dirs '/home/vincenzo/Desktop/meterial-ui-set2/set_swing/libs/'
+        dirs '../set_swing/libs/'
     }
+
 }
 
 dependencies {
 
     //implementation 'com.github.vincenzopalazzo:material-ui-swing:V9.9'
 
-    compile (name:'iconloader', ext:'jar')
-    compile (name:'material-ui-swing-0.9.9', ext:'jar')
-    compile (name:'darcula', ext:'jar')
-    compile (name:'AnimatedTransitions', ext:'jar')
-    compile (name:'AppFramework', ext:'jar')
-    compile (name:'filters-2.0.235', ext:'jar')
-    compile (name:'swing-worker-1.1', ext:'jar')
-    compile (name:'swingx-1.6.1', ext:'jar')
+    compile(name: 'iconloader', ext: 'jar')
+    compile(name: 'material-ui-swing-0.9.9', ext: 'jar')
+    compile(name: 'darcula', ext: 'jar')
+    compile(name: 'AnimatedTransitions', ext: 'jar')
+    compile(name: 'AppFramework', ext: 'jar')
+    compile(name: 'filters-2.0.235', ext: 'jar')
+    compile(name: 'swing-worker-1.1', ext: 'jar')
+    compile(name: 'swingx-1.6.1', ext: 'jar')
 
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
@@ -45,18 +46,48 @@ allprojects {
     }
 }
 
-startScripts {
-    classpath += files('src/main/resources/')
-}
+
 jar {
     manifest {
-        attributes 'Main-Class': 'SwingSwt2'
+        attributes("Class-Path": configurations.compile.collect { it.getName() }.join(','))
+
+        attributes 'Main-Class': 'SwingSet2'
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
+sourceSets {
+    integTest {
+        compileClasspath += files('src/main/java/')
+        runtimeClasspath += output + compileClasspath + files('src/main/resources/')
+    }
+}
+
+task copyFileSource {
+    doLast{
+        copy {
+            println 'init task copy source file'
+            from 'src/main/java'
+            into 'build/libs/sources'
+        }
+    }
+}
+
+task tarz(type: Tar) {
+    archiveName = 'Demo-Swing-set3.tar'
+    into ('/'){
+        from 'build/libs'
+    }
+
+    destinationDir  file('build/libs')
+    extension 'tar'
+    compression = Compression.GZIP
+}
+
+build.dependsOn copyFileSource
+build.dependsOn tarz
 // Define the main class for the application
-mainClassName = 'SwingSwt2'
+mainClassName = 'SwingSet2'
 

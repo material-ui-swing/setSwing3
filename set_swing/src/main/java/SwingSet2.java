@@ -384,13 +384,16 @@ public class SwingSet2 extends JPanel {
             String osName = System.getProperty("os.name");
             if (osName.contains("mac")) {
                 mac = UIManager.getSystemLookAndFeelClassName();
+                mi = createLafMenuItem(lafMenu, "LafMenu.mac_label", "LafMenu.mac_mnemonic",
+                        "LafMenu.mac_accessible_description", mac);
+                // set mac look and feel as default
+                currentLookAndFeel = mac;
+            }else{
+                mi =createLafMenuItem(lafMenu, "LafMenu.material_label", "LafMenu.material_mnemonic",
+                        "LafMenu.material_accessible_description", material);
+                currentLookAndFeel = material;
             }
-
-            mi = createLafMenuItem(lafMenu, "LafMenu.mac_label", "LafMenu.mac_mnemonic",
-                    "LafMenu.mac_accessible_description", mac);
             mi.setSelected(true); // this is the default l&f
-            // set mac look and feel as default
-            currentLookAndFeel = mac;
 
             createLafMenuItem(lafMenu, "LafMenu.motif_label", "LafMenu.motif_mnemonic",
                     "LafMenu.motif_accessible_description", motif);
@@ -400,9 +403,10 @@ public class SwingSet2 extends JPanel {
 
             createLafMenuItem(lafMenu, "LafMenu.gtk_label", "LafMenu.gtk_mnemonic",
                     "LafMenu.gtk_accessible_description", gtk);
-
-            createLafMenuItem(lafMenu, "LafMenu.material_label", "LafMenu.material_mnemonic",
-                    "LafMenu.material_accessible_description", material);
+            if(currentLookAndFeel != material) {
+                createLafMenuItem(lafMenu, "LafMenu.material_label", "LafMenu.material_mnemonic",
+                        "LafMenu.material_accessible_description", material);
+            }
 
             createLafMenuItem(lafMenu, "LafMenu.darcula_label", "LafMenu.darcula_mnemonic",
                     "LafMenu.darcula_accessible_description", darcula);
