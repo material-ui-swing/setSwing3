@@ -38,6 +38,8 @@
  * @(#)SwingSet2.java	1.35 03/01/23
  */
 
+import mdlaf.utils.MaterialColors;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
@@ -1004,6 +1006,8 @@ public class SwingSet2 extends JPanel {
     public void updateLookAndFeel() {
         try {
             UIManager.setLookAndFeel(currentLookAndFeel);
+            UIManager.put("Button[focus].color", MaterialColors.DARKLY_GRAY);
+            UIManager.put("Button.focusable", true);
             for (Iterator itr = swingSets.iterator(); itr.hasNext(); ) {
                 SwingSet2 ss = (SwingSet2) itr.next();
                 SwingUtilities.updateComponentTreeUI(ss);

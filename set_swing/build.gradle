@@ -29,6 +29,7 @@ dependencies {
 
     compile(name: 'iconloader', ext: 'jar')
     compile(name: 'material-ui-swing-0.9.9', ext: 'jar')
+    //compile(name: 'material-ui-swing-0.9.3.3', ext: 'jar')
     compile(name: 'darcula', ext: 'jar')
     compile(name: 'AnimatedTransitions', ext: 'jar')
     compile(name: 'AppFramework', ext: 'jar')

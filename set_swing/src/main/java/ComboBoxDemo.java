@@ -189,6 +189,7 @@ public class ComboBoxDemo extends DemoModule implements ActionListener {
 	addFace("michael",   getString("ComboBoxDemo.michael"));
 	addFace("philip",    getString("ComboBoxDemo.philip"));
 	addFace("scott",     getString("ComboBoxDemo.scott"));
+	addFace("vincent",     getString("ComboBoxDemo.vincent"));
 
 	// set the default face
 	presetCB.setSelectedIndex(0);
@@ -275,6 +276,7 @@ public class ComboBoxDemo extends DemoModule implements ActionListener {
 	cb.addItem(getString("ComboBoxDemo.michael"));
 	cb.addItem(getString("ComboBoxDemo.philip"));
 	cb.addItem(getString("ComboBoxDemo.scott"));
+	cb.addItem(getString("ComboBoxDemo.vincent"));
     }
 
     public void actionPerformed(ActionEvent e) {
