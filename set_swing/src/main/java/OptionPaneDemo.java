@@ -38,7 +38,10 @@
  */
 
 
+import mdlaf.MaterialLookAndFeel;
+
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.net.URL;
@@ -51,11 +54,19 @@ import java.net.URL;
  */
 public class OptionPaneDemo extends DemoModule {
 
+    static {
+        BasicLookAndFeel lookAndFeel = (BasicLookAndFeel) UIManager.getLookAndFeel();
+        if(lookAndFeel instanceof MaterialLookAndFeel){
+            JDialog.setDefaultLookAndFeelDecorated(true);
+        }
+    }
+
     /**
      * main method allows us to run as a standalone demo.
      */
     public static void main(String[] args) {
         OptionPaneDemo demo = new OptionPaneDemo(null);
+
         demo.mainImpl();
     }
 

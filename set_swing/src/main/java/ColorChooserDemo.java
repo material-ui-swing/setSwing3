@@ -91,32 +91,32 @@ public class ColorChooserDemo extends DemoModule {
 
 	ActionListener l = new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		Color current = bezAnim.getOuterColor();
+			Color current = bezAnim.getOuterColor();
 
-		if(e.getSource() == backgroundColorButton) {
-		    current = bezAnim.getBackgroundColor();
-		} else if(e.getSource() == gradientAButton) {
-		    current = bezAnim.getGradientColorA();
-		} else if(e.getSource() == gradientBButton) {
-		    current = bezAnim.getGradientColorB();
-		}
+			if(e.getSource() == backgroundColorButton) {
+				current = bezAnim.getBackgroundColor();
+			} else if(e.getSource() == gradientAButton) {
+				current = bezAnim.getGradientColorA();
+			} else if(e.getSource() == gradientBButton) {
+				current = bezAnim.getGradientColorB();
+			}
 
-		// Bring up a color chooser
-		Color c = JColorChooser.showDialog(
-		    getDemoPanel(),
-		    getString("ColorChooserDemo.chooser_title"),
-		    current
-		);
+			// Bring up a color chooser
+			Color c = JColorChooser.showDialog(
+				getDemoPanel(),
+				getString("ColorChooserDemo.chooser_title"),
+				current
+			);
 
-		if(e.getSource() == outerColorButton) {
-		    bezAnim.setOuterColor(c);
-		} else if(e.getSource() == backgroundColorButton) {
-		    bezAnim.setBackgroundColor(c);
-		} else if(e.getSource() == gradientAButton) {
-		    bezAnim.setGradientColorA(c);
-		} else {
-		    bezAnim.setGradientColorB(c);
-		}
+			if(e.getSource() == outerColorButton) {
+				bezAnim.setOuterColor(c);
+			} else if(e.getSource() == backgroundColorButton) {
+				bezAnim.setBackgroundColor(c);
+			} else if(e.getSource() == gradientAButton) {
+				bezAnim.setGradientColorA(c);
+			} else {
+				bezAnim.setGradientColorB(c);
+			}
 	    }
 	};
 
@@ -152,36 +152,38 @@ public class ColorChooserDemo extends DemoModule {
     }
 
     class ColorSwatch implements Icon {
-	String gradient;
-	BezierAnimationPanel bez;
 
-	public ColorSwatch(String g, BezierAnimationPanel b) {
-	    bez = b;
-	    gradient = g;
-	}
+    	String gradient;
+		BezierAnimationPanel bez;
 
-	public int getIconWidth() {
-	    return 11;
-	}
+		public ColorSwatch(String g, BezierAnimationPanel b) {
+			bez = b;
+			gradient = g;
+		}
 
-	public int getIconHeight() {
-	    return 11;
-	}
+		public int getIconWidth() {
+			return 11;
+		}
 
-	public void paintIcon(Component c, Graphics g, int x, int y) {
-	    g.setColor(Color.black);
-	    g.fillRect(x, y, getIconWidth(), getIconHeight());
-	    if(gradient.equals("GradientA")) {
-		g.setColor(bez.getGradientColorA());
-	    } else if(gradient.equals("GradientB")) {
-		g.setColor(bez.getGradientColorB());
-	    } else if(gradient.equals("Background")) {
-		g.setColor(bez.getBackgroundColor());
-	    } else if(gradient.equals("OuterLine")) {
-		g.setColor(bez.getOuterColor());
-	    }
-	    g.fillRect(x+2, y+2, getIconWidth()-4, getIconHeight()-4);
-	}
+		public int getIconHeight() {
+			return 11;
+		}
+
+		public void paintIcon(Component c, Graphics g, int x, int y) {
+			g.setColor(Color.black);
+			g.fillRect(x, y, getIconWidth(), getIconHeight());
+			if(gradient.equals("GradientA")) {
+			g.setColor(bez.getGradientColorA());
+			} else if(gradient.equals("GradientB")) {
+			g.setColor(bez.getGradientColorB());
+			} else if(gradient.equals("Background")) {
+			g.setColor(bez.getBackgroundColor());
+			} else if(gradient.equals("OuterLine")) {
+			g.setColor(bez.getOuterColor());
+			}
+			g.fillRect(x+2, y+2, getIconWidth()-4, getIconHeight()-4);
+		}
+
     }
 
 }

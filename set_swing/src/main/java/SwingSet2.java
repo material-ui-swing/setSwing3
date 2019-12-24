@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2003 Sun Microsystems, Inc. All  Rights Reserved.
- *  Copyright (c) 2019 Vincent Palazzo https://github.com/vincenzopalazzo.
+ * Copyright (c) 2019 Vincent Palazzo https://github.com/vincenzopalazzo.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -37,8 +37,11 @@
 /*
  * @(#)SwingSet2.java	1.35 03/01/23
  */
-
-import mdlaf.utils.MaterialColors;
+import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.JMarsDarkTheme;
+import mdlaf.themes.MaterialLiteTheme;
+import mdlaf.themes.MaterialOceanicTheme;
+import mdlaf.themes.MaterialTheme;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -103,6 +106,8 @@ public class SwingSet2 extends JPanel {
             "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
     private static final String material =
             "mdlaf.MaterialLookAndFeel";
+    private static final String themeMaterial = "jmars_dark";
+            //"com.bulenkov.darcula.DarculaLaf";
     private static final String darcula =
             "com.bulenkov.darcula.DarculaLaf";
 
@@ -160,7 +165,7 @@ public class SwingSet2 extends JPanel {
     private SwingSet2Applet applet = null;
 
     // To debug or not to debug, that is the question
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
     private int debugCounter = 0;
 
     // The tab pane that holds the demo
@@ -190,6 +195,17 @@ public class SwingSet2 extends JPanel {
     public SwingSet2(SwingSet2Applet applet, GraphicsConfiguration gc) {
         try {
             UIManager.setLookAndFeel((LookAndFeel) ClassLoader.getSystemClassLoader().loadClass(currentLookAndFeel).newInstance());
+            UIManager.put("Table[row].height", 2);
+            if(themeMaterial.equals("lite")){
+                MaterialLookAndFeel.changeTheme(new MaterialLiteTheme());
+                SwingUtilities.updateComponentTreeUI(this);
+            }else if(themeMaterial.equals("jmars_dark")) {
+                MaterialLookAndFeel.changeTheme(new JMarsDarkTheme());
+                SwingUtilities.updateComponentTreeUI(this);
+            }else if(themeMaterial.equals("oceanic")){
+                MaterialLookAndFeel.changeTheme(new MaterialOceanicTheme());
+                SwingUtilities.updateComponentTreeUI(this);
+            }
         } catch (UnsupportedLookAndFeelException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
@@ -390,8 +406,8 @@ public class SwingSet2 extends JPanel {
                         "LafMenu.mac_accessible_description", mac);
                 // set mac look and feel as default
                 currentLookAndFeel = mac;
-            }else{
-                mi =createLafMenuItem(lafMenu, "LafMenu.material_label", "LafMenu.material_mnemonic",
+            } else {
+                mi = createLafMenuItem(lafMenu, "LafMenu.material_label", "LafMenu.material_mnemonic",
                         "LafMenu.material_accessible_description", material);
                 currentLookAndFeel = material;
             }
@@ -405,10 +421,16 @@ public class SwingSet2 extends JPanel {
 
             createLafMenuItem(lafMenu, "LafMenu.gtk_label", "LafMenu.gtk_mnemonic",
                     "LafMenu.gtk_accessible_description", gtk);
-            if(currentLookAndFeel != material) {
+            if (currentLookAndFeel != material) {
                 createLafMenuItem(lafMenu, "LafMenu.material_label", "LafMenu.material_mnemonic",
                         "LafMenu.material_accessible_description", material);
             }
+
+            createLafMenuItem(lafMenu, "LafMenu.material_oceanic_label", "LafMenu.material_oceanic_label",
+                    "LafMenu.material_accessible_description", material);
+
+            createLafMenuItem(lafMenu, "LafMenu.material_jmars_dark_label", "LafMenu.material_jmars_dark_label",
+                    "LafMenu.material_accessible_description", material);
 
             createLafMenuItem(lafMenu, "LafMenu.darcula_label", "LafMenu.darcula_mnemonic",
                     "LafMenu.darcula_accessible_description", darcula);
@@ -482,6 +504,8 @@ public class SwingSet2 extends JPanel {
                     "ToolTipMenu.off_mnemonic",
                     "ToolTipMenu.off_accessible_description",
                     new ToolTipAction(this, false));
+
+           // UIManager.put( "TabbedPane.linePositionY", 41);
         }
 
 
@@ -561,14 +585,12 @@ public class SwingSet2 extends JPanel {
     /**
      * Creates a JRadioButtonMenuItem for the Themes menu
      */
-    public JMenuItem createThemesMenuItem(JMenu menu, String label, String mnemonic,
-                                          String accessibleDescription, DefaultMetalTheme theme) {
+    public JMenuItem createThemesMenuItem(JMenu menu, String label, String mnemonic, String accessibleDescription, DefaultMetalTheme theme) {
         JRadioButtonMenuItem mi = (JRadioButtonMenuItem) menu.add(new JRadioButtonMenuItem(getString(label)));
         themesMenuGroup.add(mi);
         mi.setMnemonic(getMnemonic(mnemonic));
         mi.getAccessibleContext().setAccessibleDescription(getString(accessibleDescription));
         mi.addActionListener(new ChangeThemeAction(this, theme));
-
         return mi;
     }
 
@@ -583,9 +605,25 @@ public class SwingSet2 extends JPanel {
         mi.getAccessibleContext().setAccessibleDescription(getString(accessibleDescription));
         mi.addActionListener(new ChangeLookAndFeelAction(this, laf));
 
-        mi.setEnabled(isAvailableLookAndFeel(laf));
-
+        if(currentLookAndFeel.equals(material)){
+            MaterialLookAndFeel materialLookAndFeel = (MaterialLookAndFeel) UIManager.getLookAndFeel();
+            MaterialTheme theme = materialLookAndFeel.getTheme();
+            mi.setEnabled(isSameThemeMaterial(theme, label));
+        }else{
+            mi.setEnabled(isAvailableLookAndFeel(laf));
+        }
         return mi;
+    }
+
+    private boolean isSameThemeMaterial(MaterialTheme theme, String label){
+        if((theme instanceof MaterialLiteTheme) && label.contains("material_label")){
+            return false;
+        }else if((theme instanceof MaterialOceanicTheme) && label.contains("oceanic")){
+            return false;
+        }else if((theme instanceof JMarsDarkTheme) && label.contains("jmars_dark")){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -717,6 +755,7 @@ public class SwingSet2 extends JPanel {
         if (!isApplet() && getFrame() != null) {
             // put swingset in a frame and show it
             JFrame f = getFrame();
+            //f.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             f.setTitle(getString("Frame.title"));
             f.getContentPane().add(this, BorderLayout.CENTER);
             f.pack();
@@ -995,7 +1034,7 @@ public class SwingSet2 extends JPanel {
     public void setLookAndFeel(String laf) {
         if (currentLookAndFeel != laf) {
             currentLookAndFeel = laf;
-            themesMenu.setEnabled(laf == metal);
+            themesMenu.setEnabled(laf == metal || laf == material);
             updateLookAndFeel();
         }
     }
@@ -1006,8 +1045,6 @@ public class SwingSet2 extends JPanel {
     public void updateLookAndFeel() {
         try {
             UIManager.setLookAndFeel(currentLookAndFeel);
-            UIManager.put("Button[focus].color", MaterialColors.DARKLY_GRAY);
-            UIManager.put("Button.focusable", true);
             for (Iterator itr = swingSets.iterator(); itr.hasNext(); ) {
                 SwingSet2 ss = (SwingSet2) itr.next();
                 SwingUtilities.updateComponentTreeUI(ss);
@@ -1151,7 +1188,7 @@ public class SwingSet2 extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-            swingset.setDemo(demo);
+            swingset. setDemo(demo);
         }
     }
 
@@ -1169,6 +1206,7 @@ public class SwingSet2 extends JPanel {
     }
 
     class ChangeLookAndFeelAction extends AbstractAction {
+
         SwingSet2 swingset;
         String laf;
 

@@ -37,8 +37,11 @@
  * @(#)ExampleFileView.java	1.6 03/01/23
  */
 
+import mdlaf.MaterialLookAndFeel;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileView;
+import javax.swing.plaf.basic.BasicLookAndFeel;
 import java.io.File;
 import java.util.Hashtable;
 
@@ -66,6 +69,14 @@ import java.util.Hashtable;
  * @author Jeff Dinkins
  */
 public class ExampleFileView extends FileView {
+
+    static {
+        BasicLookAndFeel lookAndFeel = (BasicLookAndFeel) UIManager.getLookAndFeel();
+        if(lookAndFeel instanceof MaterialLookAndFeel){
+            JDialog.setDefaultLookAndFeelDecorated(true);
+        }
+    }
+
     private Hashtable icons = new Hashtable(5);
     private Hashtable fileDescriptions = new Hashtable(5);
     private Hashtable typeDescriptions = new Hashtable(5);
