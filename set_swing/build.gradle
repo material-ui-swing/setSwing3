@@ -6,17 +6,17 @@ repositories {
     flatDir {
         dirs '../set_swing/libs/'
         dirs '/home/vincenzo/Github/material-ui-swing/build/libs'
+        //dirs '/home/vincenzo/Github/master_awita_material/material-ui-swing/target'
     }
-
 }
 
 dependencies {
 
     //implementation 'io.github.vincenzopalazzo:material-ui-swing:1.0-Beta-1.4.2'
 
-
     compile(name: 'iconloader', ext: 'jar')
-    compile(name: 'material-ui-swing-1.1.1_beta', ext: 'jar')
+    compile(name: 'material-ui-swing-1.1.2_beta', ext: 'jar')
+    //compile(name: 'material-ui-swing-1.1.1-beta', ext: 'jar')
     compile(name: 'darcula', ext: 'jar')
     compile(name: 'AnimatedTransitions', ext: 'jar')
     compile(name: 'AppFramework', ext: 'jar')
@@ -59,7 +59,6 @@ task tarz(type: Tar) {
     into ('/'){
         from 'build/libs'
     }
-
     destinationDir  file('build/libs')
     extension 'tar'
     compression = Compression.GZIP
