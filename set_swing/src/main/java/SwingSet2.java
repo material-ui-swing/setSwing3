@@ -37,6 +37,7 @@
 /*
  * @(#)SwingSet2.java	1.35 03/01/23
  */
+import io.materialtheme.darkstackoverflow.DarkStackOverflowTheme;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.JMarsDarkTheme;
 import mdlaf.themes.MaterialLiteTheme;
@@ -62,6 +63,10 @@ import java.util.*;
  * @version 1.35 01/23/03
  */
 public class SwingSet2 extends JPanel {
+
+    static {
+        JFrame.setDefaultLookAndFeelDecorated(false); //not support yet
+    }
 
     String[] demos = {
             "ButtonDemo",
@@ -106,7 +111,8 @@ public class SwingSet2 extends JPanel {
             "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
     private static final String material =
             "mdlaf.MaterialLookAndFeel";
-    private static final String themeMaterial = "jmars_dark";
+        //private static final String themeMaterial = "jmars_dark";
+    private static final String themeMaterial = "lite";
             //"com.bulenkov.darcula.DarculaLaf";
     private static final String darcula =
             "com.bulenkov.darcula.DarculaLaf";
@@ -195,17 +201,14 @@ public class SwingSet2 extends JPanel {
     public SwingSet2(SwingSet2Applet applet, GraphicsConfiguration gc) {
         try {
             UIManager.setLookAndFeel((LookAndFeel) ClassLoader.getSystemClassLoader().loadClass(currentLookAndFeel).newInstance());
-            UIManager.put("Table[row].height", 2);
             if(themeMaterial.equals("lite")){
-                MaterialLookAndFeel.changeTheme(new MaterialLiteTheme());
-                SwingUtilities.updateComponentTreeUI(this);
+                MaterialLookAndFeel.changeTheme(new DarkStackOverflowTheme());
             }else if(themeMaterial.equals("jmars_dark")) {
                 MaterialLookAndFeel.changeTheme(new JMarsDarkTheme());
-                SwingUtilities.updateComponentTreeUI(this);
             }else if(themeMaterial.equals("oceanic")){
                 MaterialLookAndFeel.changeTheme(new MaterialOceanicTheme());
-                SwingUtilities.updateComponentTreeUI(this);
             }
+            SwingUtilities.updateComponentTreeUI(this);
         } catch (UnsupportedLookAndFeelException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
@@ -1034,7 +1037,7 @@ public class SwingSet2 extends JPanel {
     public void setLookAndFeel(String laf) {
         if (currentLookAndFeel != laf) {
             currentLookAndFeel = laf;
-            themesMenu.setEnabled(laf == metal || laf == material);
+            themesMenu.setEnabled(laf == metal);
             updateLookAndFeel();
         }
     }

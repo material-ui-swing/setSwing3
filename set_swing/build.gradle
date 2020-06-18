@@ -5,18 +5,20 @@ repositories {
     jcenter()
     flatDir {
         dirs '../set_swing/libs/'
-        dirs '/home/vincenzo/Github/material-ui-swing/build/libs'
-        //dirs '/home/vincenzo/Github/master_awita_material/material-ui-swing/target'
+        dirs '/home/vincent/Github/material-ui-swing/build/libs'
+        //dirs '/home/vincent/Github/master_material-ui-swing/material-ui-swing/target'
+        dirs '/home/vincent/Github/DarkStackOverflowTheme/build/libs'
     }
 }
 
 dependencies {
 
-    //implementation 'io.github.vincenzopalazzo:material-ui-swing:1.0-Beta-1.4.2'
+   //implementation 'io.github.vincenzopalazzo:material-ui-swing:1.1.1-rc4'
 
     compile(name: 'iconloader', ext: 'jar')
-    compile(name: 'material-ui-swing-1.1.2_beta', ext: 'jar')
-    //compile(name: 'material-ui-swing-1.1.1-beta', ext: 'jar')
+    compile(name: 'material-ui-swing-1.1.1-rc5-with-dependencies', ext: 'jar')
+    //compile(name: 'material-ui-swing-1.1.1_pre-release_6.1-jar-with-dependencies', ext: 'jar')
+    compile(name: 'DarkStackOverflowTheme-0.1', ext: 'jar')
     compile(name: 'darcula', ext: 'jar')
     compile(name: 'AnimatedTransitions', ext: 'jar')
     compile(name: 'AppFramework', ext: 'jar')

@@ -1,7 +1,9 @@
 #directory of the sistem costruction
-build/
-out/
+**/build/
+**/out/
+**/swing_set_material
+**/swing_set/.gradle
 
 #file/directory ide
-.idea/
-*.iml
+**/.idea/
+**/*.iml
