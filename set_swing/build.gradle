@@ -13,12 +13,13 @@ repositories {
 
 dependencies {
 
-   //implementation 'io.github.vincenzopalazzo:material-ui-swing:1.1.1-rc4'
+    implementation 'io.github.vincenzopalazzo:material-ui-swing:1.1.1'
+    implementation 'io.github.material-ui-swing:DarkStackOverflowTheme:0.0.1-rc2'
 
     compile(name: 'iconloader', ext: 'jar')
-    compile(name: 'material-ui-swing-1.1.1-rc5-with-dependencies', ext: 'jar')
+   // compile(name: 'material-ui-swing-1.1.1-rc5-with-dependencies', ext: 'jar')
     //compile(name: 'material-ui-swing-1.1.1_pre-release_6.1-jar-with-dependencies', ext: 'jar')
-    compile(name: 'DarkStackOverflowTheme-0.1', ext: 'jar')
+    //compile(name: 'DarkStackOverflowTheme-0.1', ext: 'jar')
     compile(name: 'darcula', ext: 'jar')
     compile(name: 'AnimatedTransitions', ext: 'jar')
     compile(name: 'AppFramework', ext: 'jar')
@@ -47,7 +48,7 @@ sourceSets {
 }
 
 task copyFileSource {
-    doLast{
+    doLast {
         copy {
             println 'init task copy source file'
             from 'src/main/java'
@@ -58,10 +59,10 @@ task copyFileSource {
 
 task tarz(type: Tar) {
     archiveName = 'Demo-Swing-set3.tar'
-    into ('/'){
+    into('/') {
         from 'build/libs'
     }
-    destinationDir  file('build/libs')
+    destinationDir file('build/libs')
     extension 'tar'
     compression = Compression.GZIP
 }
